@@ -16,7 +16,6 @@ public class OperationServiceImpl implements OperationService {
 
 	@Autowired
 	OperationRepository operationRepo;
-	CompteBancaireRepository compterepo; 
 	/* @Override
 	//public String nbOperations(Long clientId) {
 	//	return "nb operation d'un client x egale a " + operationRepo.countByClientId(clientId)	;
@@ -37,25 +36,15 @@ operationRepo.deleteById(id);
 		operationRepo.saveAll(operations);
 		
 	}
-	
-	
-	public String Extraire(Long id,Double mon) {
-	    CompteBancaire compte = compterepo.findById(id).get();
-		if( mon > compte.getSolde())
-	    {
-	    	return "Vous n'avez pas le droit de retirer ce montant";
-	    }
-	    else
-		{compte.setSolde(compte.getSolde()-mon);
-		return "Votre montant actuel est : "+compte.getSolde();
-	}
-	}
+
 	@Override
-	public String Ajouter(Long id,Double mon) {
-	    CompteBancaire compte = compterepo.findById(id).get();
-		compte.setSolde(compte.getSolde()-mon);
-		return "Votre montant actuel est : "+compte.getSolde();
+	public List<Operation> AfficherOperations() {
+		return operationRepo.findAll();
+		
 	}
+	
+	
+	
 	}
 	
 

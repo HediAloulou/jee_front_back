@@ -12,6 +12,9 @@ void EnregistrerCompte(CompteBancaire compte);
 void supprimerCompte(Long id);
 public List <CompteBancaire> AfficherComptes();
 String Consultation_solde(Long id);
-
+public String Afficher_proprietaire(Long id);
+String Extraire(Long id,Double mon);
+String Ajouter(Long id,Double mon);
+public void deleteAccountAndRelatedEntities(Long compteId);
 
 }

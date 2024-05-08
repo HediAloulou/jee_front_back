@@ -1,5 +1,6 @@
 package com.fss.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +24,41 @@ import com.fss.services.*;
 @RequestMapping(path = "/banque_compte")
 @CrossOrigin(origins = "http://localhost:4200")
 public class CompteController {
-	@Autowired
-	CompteService compteservice;
-	
-	@GetMapping("/nbcomptes")
-	  public String nbClients()
-	  {
-		  return compteservice.nbComptes();
-		  
-	  }
-	@GetMapping("/comptes")
-	  List<CompteBancaire> AfficherComptes()
-	  {
-
-		  return compteservice.AfficherComptes();
-	  }
-	  
-	@GetMapping("/solde")
-	  String Affichersolde(Long id)
-	  {
-
-		  return compteservice.Consultation_solde(id);
-	  }
-	  
-	  
-	
-	
-
+    @Autowired
+    CompteService compteservice;
+    
+    @GetMapping("/nbcomptes")
+    public String nbClients() {
+        return compteservice.nbComptes();
+    }
+    
+    @GetMapping("/comptes")
+    public ArrayList<CompteBancaire> AfficherComptes() {
+        return (ArrayList<CompteBancaire>) compteservice.AfficherComptes();
+    }
+    
+    @GetMapping("/solde")
+    String Affichersolde(Long id) {
+        return compteservice.Consultation_solde(id);
+    }
+    
+    @GetMapping("/proprietaire")
+    String Afficher_proprietaire(Long id) {
+        return compteservice.Afficher_proprietaire(id);
+    }
+    
+    @DeleteMapping("/supprimer/{id}")
+    public void SupprimerClient(@PathVariable("id") Long id) {
+        compteservice.deleteAccountAndRelatedEntities(id);
+    }
+    
+    @PostMapping("/extraire/{id}/{montant}")
+    public String extraire(@PathVariable("id") Long id, @PathVariable("montant") Double montant) {
+        return compteservice.Extraire(id, montant);
+    }
+    
+    @PostMapping("/ajouter/{id}/{montant}")
+    public String ajouter(@PathVariable("id") Long id, @PathVariable("montant") Double montant) {
+        return compteservice.Ajouter(id, montant);
+    }
 }

@@ -1,5 +1,6 @@
 package com.fss.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +41,10 @@ public class ClientController {
 	  
 	  
 	  @GetMapping("/clients")
-	  List <Client> AfficherClients()
+	  public ArrayList <Client> AfficherClients()
 	  {
 
-		  return clientservice.AfficherClients();
+		  return (ArrayList<Client>) clientservice.AfficherClients();
 	  }
 	  
 	  
@@ -66,7 +67,7 @@ public class ClientController {
 	  @DeleteMapping("/supprimer/{id}")
 	  public void SupprimerClient(@PathVariable("id") Long id)
 	  {
-		  clientservice.SupprimerClient(id);
+		  clientservice.deleteClientAndRelatedEntities(id);
 	  }
 
 	  

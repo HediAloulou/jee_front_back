@@ -7,7 +7,8 @@ import com.fss.entities.Client;
 public interface ClientService {
 String nbClients();
 void EnregistrerClient(Client client);
-List<Client> AfficherClients();
+public List<Client> AfficherClients();
 Client RechercheClient(Long id);
 void SupprimerClient(Long id);
+public void deleteClientAndRelatedEntities(Long clientId);
 }

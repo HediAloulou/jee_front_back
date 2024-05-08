@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.fss.entities.Client;
 import com.fss.entities.CompteBancaire;
+import com.fss.entities.CompteCourant;
 import com.fss.entities.CompteStatus;
 import com.fss.entities.Operation;
 import com.fss.entities.TypeOperation;
@@ -56,30 +57,49 @@ public class ProjetApplication implements CommandLineRunner {
         Client client2 = clientService.RechercheClient(2L);
         
         // enregistrer le compte du premier client
-        CompteBancaire compteCourant1 = new CompteBancaire(1L, new Date(), 500.25, CompteStatus.ACTIVE, client1, operations1);
-        compteService.EnregistrerCompte(compteCourant1);        
+        CompteBancaire comptebancaire1 = new CompteBancaire(1L, new Date(), 500.25, CompteStatus.ACTIVE, client1, operations1);
+        compteService.EnregistrerCompte(comptebancaire1);        
+        System.out.println(compteService.Consultation_solde(1L));
 
-        Operation operation1 = new Operation(1L, new Date(), 22.5, TypeOperation.DEBIT, compteCourant1);
+        Operation operation1 = new Operation(1L, new Date(), 22.5, TypeOperation.DEBIT, comptebancaire1);
         operations1.add(operation1);
+        compteService.Extraire(operation1.getComptebancaire().getId(), 22.5);
+        System.out.println(compteService.Consultation_solde(1L));
 
-        Operation operation2 = new Operation(2L, new Date(), 50.0, TypeOperation.CREDIT, compteCourant1);
+        Operation operation2 = new Operation(2L, new Date(), 50.0, TypeOperation.CREDIT, comptebancaire1);
         operations1.add(operation2);
-
-        compteCourant1.setOperations(operations1);
+        compteService.Ajouter(operation2.getComptebancaire().getId(), 50.2);
+        comptebancaire1.setOperations(operations1);
         operationService.EnregistrerOperations(operations1);
+        System.out.println(compteService.Consultation_solde(1L));
 
+        
         // enregistrer le compte du deuxième client
-        CompteBancaire compteCourant2 = new CompteBancaire(2L, new Date(), 1000.25, CompteStatus.ACTIVE, client2, operations2);
-        compteService.EnregistrerCompte(compteCourant2);
+        CompteBancaire comptebancaire2 = new CompteBancaire(2L, new Date(), 1000.25, CompteStatus.ACTIVE, client2, operations2);
+        compteService.EnregistrerCompte(comptebancaire2);
 
-        Operation operation3 = new Operation(3L, new Date(), 30.0, TypeOperation.DEBIT, compteCourant2);
+        Operation operation3 = new Operation(3L, new Date(), 30.0, TypeOperation.DEBIT, comptebancaire2);
         operations2.add(operation3);
 
-        Operation operation4 = new Operation(4L, new Date(), 50.0, TypeOperation.CREDIT, compteCourant2);
+        Operation operation4 = new Operation(4L, new Date(), 50.0, TypeOperation.CREDIT, comptebancaire2);
         operations2.add(operation4);
         
-        compteCourant2.setOperations(operations2);
+        comptebancaire2.setOperations(operations2);
 
         operationService.EnregistrerOperations(operations2);
+        
+        // enregistrer un compte courant
+        CompteCourant compteCourant3 = new CompteCourant();
+        compteCourant3.setId(3L);
+        compteCourant3.setDateCreation(new Date());
+        compteCourant3.setSolde(1340.0);
+        compteCourant3.setEtat(CompteStatus.ACTIVE);
+        compteCourant3.setClient(client2); // Assuming client2 is an existing client
+        compteCourant3.setOperations(operations2); // Assuming operations2 is an existing list of operations
+        compteCourant3.setDecouvert(10.5);
+        compteService.EnregistrerCompte(compteCourant3);
+        	
+        
+        
     }
 }

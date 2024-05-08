@@ -10,7 +10,7 @@ public interface OperationService {
 	void Operationsupprimer(Long id);
 	//String nbOperations(Long clientId);
 	void EnregistrerOperations(List<Operation> operations);
-	String Extraire(Long id,Double mon);
-	String Ajouter(Long id,Double mon);
+	public List<Operation> AfficherOperations();
+	
 	
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
@@ -43,13 +44,15 @@ public class CompteBancaire implements Serializable {
     private Double solde;
     @Column(name = "etat")
     @Enumerated(EnumType.STRING)
+	
     private CompteStatus etat;
     @ManyToOne
+    
 	@JoinColumn(name="compte_client")
-    @JsonBackReference
-
-	private Client client;
+	@JsonIgnore
+    Client client;
     @OneToMany(mappedBy="comptebancaire")
+	@JsonIgnore
     private List<Operation> operations;
     
     

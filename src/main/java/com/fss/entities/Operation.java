@@ -3,6 +3,9 @@ package com.fss.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,11 +33,13 @@ public class Operation implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date dateCreation;
 	@Column(name="montant")
+	@JsonIgnore
 	private Double montant;
 	@Column(name = "type_opearion")
 	@Enumerated(EnumType.STRING)
 	private TypeOperation type;
 	@ManyToOne
 	@JoinColumn(name="operation_compte")
+	@JsonIgnore
 	private CompteBancaire comptebancaire;
 }

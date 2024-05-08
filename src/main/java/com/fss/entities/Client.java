@@ -3,6 +3,7 @@ package com.fss.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,8 +31,7 @@ public class Client implements Serializable  {
 	private String prenom;
 	@Column(name = "email_du_client")
 	private String email;
-	@OneToMany(mappedBy="client")
-	@JsonManagedReference
-
+	@OneToMany(mappedBy = "client") 
+	@JsonIgnore
 	private List<CompteBancaire> compte_client;
 }
